@@ -1,1 +1,2 @@
-# CRUD-Simples utilizando o Prisma com postgres
+# CRUD-Simples
+Crud básico feito com express + prisma integrando com o postgres rodando do container 
