@@ -21,10 +21,7 @@ todosRoutes.post("/todos", async (req, res)=>{
 //r
 todosRoutes.get("/todos", async (req, res)=>{
     const todos = await prisma.todo.findMany()
-    todos.forEach(todo=>{
-        allTodos.push(todo)
-    })
-    return res.status(201).json(allTodos)
+    return res.status(201).json(todos)
 })
 //u
 todosRoutes.put("/todos", async (req, res)=> {
@@ -81,7 +78,7 @@ todosRoutes.delete("/todos/:id", async (req, res)=>{
             id: intId
         }
     })
-    return res.status(200).json(deleteTodo)
+    return res.status(200)
 })
 
 module.exports = todosRoutes;
