@@ -16,7 +16,7 @@ todosRoutes.post("/todos", async (req, res)=>{
             name,
         }
     })
-    return res.status(201).json(allTodos)
+    return res.status(201).json(todo)
 })
 //r
 todosRoutes.get("/todos", async (req, res)=>{
