@@ -6,9 +6,9 @@ export async function getTodos(){
 }
 
 export async function postTodo(todo){
-    const res = await axios.post("http://localhost:3002/todos", todo)
-    .then(resp=>{
-        getTodos()
-    })
-    
+    await axios.post("http://localhost:3002/todos", {name:todo})
+}
+
+export async function deleteTodo(id){
+    await axios.delete(`http://localhost:3002/todos/${id}`)
 }

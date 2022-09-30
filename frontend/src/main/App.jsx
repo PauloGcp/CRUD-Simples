@@ -6,21 +6,42 @@ import { getTodos, postTodo } from "../axios-routes/axiosRoutes"
 function App() {
 
   const [todos, setTodos] = useState([])
+  const [inputVisible, setInputVisible] = useState(true)
+  const [name, setName] = useState("")
 
-  const teste = async function(){
+  const handleButton = ()=>{
+    setInputVisible(!inputVisible)
+    if(inputVisible){
+      if(name === ""){
+        alert("ToDo sem descrição")
+      } else{
+        postTodoAsync(name)
+      }
+    }
+  }
+  
+  const postTodoAsync = async function(name){
+    await postTodo(name)
+      .then(res=>{
+        getTodosAsync()
+      })
+  }
+
+  const getTodosAsync = async function(){
     await getTodos()
       .then(res=>{
         setTodos(res.data)
       })
   }
   
+  /* useEffect(()=>{
+    getTodosAsync()
+  }, []) */
+
   useEffect(()=>{
-    getTodos()
-    teste()
-  }, [])
-
-  const [name, setName] = useState("")
-
+    getTodosAsync()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [<Todos/>])
   return (
     <div className="App">
       <header className="container">
@@ -28,13 +49,13 @@ function App() {
           <h1>Faz melhor, vai faz</h1>
         </div>
         <div className='todos'>
-          <Todos todos={todos}></Todos>
+          <Todos setTodos={setTodos} getTodos={getTodosAsync} todos={todos}></Todos>
         </div>
-        <input className="inputName" type="text" onChange={(e)=>{setName(e.target.value)}}/>
-        <button className='newTaskButton'>Add Tarefinha</button>
+        <input style={{display: inputVisible ? 'flex': "none"}} className="inputName" type="text" onChange={(e)=>{setName(e.target.value)}}/>
+        <button onClick={handleButton} className='newTaskButton' >{inputVisible? "Salvar tarefa" : "+"}</button>
       </header>
     </div>
   );
 }
 
-export default App;
+export default App
